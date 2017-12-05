@@ -1,0 +1,23 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.codecrafters.server.SpringBootGwtProperties",
+      "name": "spring-boot-server",
+      "type": "com.codecrafters.server.SpringBootGwtProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.codecrafters.server.SpringBootGwtProperties",
+      "name": "spring-boot-server.initial-todo-items",
+      "type": "java.util.List<java.lang.String>"
+    },
+    {
+      "sourceType": "com.codecrafters.server.SpringBootGwtProperties",
+      "defaultValue": false,
+      "name": "spring-boot-server.scheduled-database-reset",
+      "type": "java.lang.Boolean"
+    }
+  ]
+}

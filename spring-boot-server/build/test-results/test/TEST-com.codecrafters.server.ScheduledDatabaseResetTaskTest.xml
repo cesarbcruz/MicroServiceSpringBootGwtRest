@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.codecrafters.server.ScheduledDatabaseResetTaskTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2017-12-04T17:30:15" hostname="noteLogic" time="0.178">
+  <properties/>
+  <testcase name="reset the database when scheduling is enabled" classname="com.codecrafters.server.ScheduledDatabaseResetTaskTest" time="0.176"/>
+  <testcase name="do nothing when scheduling is not enabled" classname="com.codecrafters.server.ScheduledDatabaseResetTaskTest" time="0.001"/>
+  <system-out><![CDATA[15:30:15.168 [Test worker] INFO com.codecrafters.server.ScheduledDatabaseResetTask - Reset database
+15:30:15.175 [Test worker] INFO com.codecrafters.server.ScheduledDatabaseResetTask - Saved 0 todo items to the database: []
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
