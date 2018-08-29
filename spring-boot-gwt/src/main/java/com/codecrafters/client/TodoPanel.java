@@ -1,10 +1,12 @@
 package com.codecrafters.client;
 
-import com.codecrafters.app.ConfigurationService;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
@@ -22,9 +24,10 @@ class TodoPanel extends Composite {
 
     private static final String urlService = "http://localhost:8090/todos";
 
-    interface TestViewUiBinder extends UiBinder<HTMLPanel, TodoPanel> {}
+    interface TestViewUiBinder extends UiBinder<HTMLPanel, TodoPanel> {
+    }
     private static TestViewUiBinder ourUiBinder = GWT.create(TestViewUiBinder.class);
-    
+
     private static TodoItemService todoItemService;
 
     @UiField
@@ -35,14 +38,14 @@ class TodoPanel extends Composite {
 
     @UiField
     Button addTodoItemButton;
-    
+
     public TodoPanel() {
-        
+
         todoItemService = GWT.create(TodoItemService.class);
-        
+
         Resource resource = new Resource(urlService);
-        ((RestServiceProxy)todoItemService).setResource(resource);
-        
+        ((RestServiceProxy) todoItemService).setResource(resource);
+
         initWidget(ourUiBinder.createAndBindUi(this));
         refreshTodoItems();
 
@@ -91,15 +94,34 @@ class TodoPanel extends Composite {
      *
      * @param text the text of the todoItem
      */
+    abstract class LogicDefaultMethodCallback<T> implements MethodCallback<T> {
+
+        @Override
+        public void onFailure(Method method, Throwable exception) {
+            JSONValue ret = JSONParser.parseStrict(method.getResponse().getText());
+            Window.alert(ret.isObject().get("id").isNumber().doubleValue() + "");
+        }
+
+    }
+
+    abstract class LogicWithFailMethodCallback<T> implements MethodCallback<T> {
+
+        abstract void onFailure();
+
+        @Override
+        public void onFailure(Method method, Throwable exception) {
+            JSONValue ret = JSONParser.parseStrict(method.getResponse().getText());
+            Window.alert(ret.isObject().get("id").isNumber().doubleValue() + "");
+            onFailure();
+        }
+
+    }
+
     private void addTodoItem(final String text) {
-        todoItemService.addTodo(new TodoItem(text), new MethodCallback<Void>() {
-            @Override
-            public void onFailure(final Method method, final Throwable exception) {
-
-            }
+        todoItemService.addTodo(new TodoItem(text), new LogicDefaultMethodCallback<TodoItem>() {
 
             @Override
-            public void onSuccess(final Method method, final Void response) {
+            public void onSuccess(final Method method, final TodoItem response) {
                 todoItemTextBox.setText("");
                 refreshTodoItems();
             }
