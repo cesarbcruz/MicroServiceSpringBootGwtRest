@@ -17,7 +17,8 @@ interface TodoItemService extends RestService {
     /**
      * Get all todoItems from the server.
      *
-     * @param text optional text to only get the todoItems which contain the given text
+     * @param text optional text to only get the todoItems which contain the
+     * given text
      * @param callback callback
      */
     @GET
@@ -31,7 +32,7 @@ interface TodoItemService extends RestService {
      * @param callback callback
      */
     @PUT
-    void addTodo(final TodoItem todoItem, final MethodCallback<Void> callback);
+    void addTodo(final TodoItem todoItem, final MethodCallback<TodoItem> callback);
 
     /**
      * Delete a todoItem from the server.
